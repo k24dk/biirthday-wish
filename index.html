@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Nindpaglu!</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0"></script> <!-- Confetti -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+        body {
+            text-align: center;
+            font-family: 'Great Vibes', cursive;
+            background-color: #0a0f37;
+            margin: 0;
+            padding: 0;
+            color: gold;
+            overflow: hidden;
+        }
+
+        .hidden {
+            display: none; /* Hide content initially */
+        }
+
+        h1 {
+            font-size: 3em;
+            text-shadow: 2px 2px 10px rgba(255, 215, 0, 0.8);
+            margin-top: 20px;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { text-shadow: 0 0 10px gold; }
+            50% { text-shadow: 0 0 30px gold; }
+            100% { text-shadow: 0 0 10px gold; }
+        }
+
+        .message-box {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px gold;
+            max-width: 600px;
+            margin: 20px auto;
+            font-size: 1.5em;
+        }
+
+        .cake {
+            margin-top: 100px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            width: 300px;
+            border: 4px solid gold;
+            border-radius: 15px;
+            box-shadow: 0 0 20px gold;
+        }
+
+        .cake:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px gold;
+        }
+
+        /* Balloons */
+        .balloon-container {
+            position: fixed;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            display: none;
+        }
+
+        .balloon {
+            width: 40px;
+            height: 50px;
+            position: absolute;
+            bottom: -60px;
+            border-radius: 50%;
+            animation: floatBalloon linear infinite;
+        }
+
+        .gold-balloon {
+            background: radial-gradient(circle, gold, goldenrod);
+        }
+
+        .blue-balloon {
+            background: radial-gradient(circle, #1E90FF, #00008B);
+        }
+
+        @keyframes floatBalloon {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Birthday Cake -->
+    <img class="cake" id="cake" src="https://your-image-url.com/cake.jpg" alt="Tap the Cake">  <!-- CHANGE THIS -->
+
+    <!-- Birthday Wish & Message -->
+    <h1 id="title" class="hidden">🎉 Happy Birthday, Nindpaglu! 🎂</h1>
+
+    <div class="message-box hidden" id="message">
+        <p>On this special day, I just want to remind you how incredibly amazing you are. You bring so much joy into my life, and I’m beyond grateful to have you by my side. Every moment with you is a beautiful adventure, and I can't wait to create more wonderful memories together. ❤️</p>
+    </div>
+
+    <!-- Balloons -->
+    <div class="balloon-container" id="balloonContainer"></div>
+
+    <!-- Birthday Song -->
+    <audio id="birthdaySong" src="https://www.fesliyanstudios.com/play-mp3/387" preload="auto"></audio>
+
+    <script>
+        function revealContent() {
+            document.getElementById("title").classList.remove("hidden");
+            document.getElementById("message").classList.remove("hidden");
+            document.getElementById("cake").style.display = "none";
+
+            var audio = document.getElementById("birthdaySong");
+            audio.play();
+
+            // Confetti effect
+            confetti({
+                particleCount: 300,
+                spread: 120,
+                origin: { y: 0.6 },
+                colors: ['#FFD700', '#1E90FF', '#FFFACD']
+            });
+
+            // Show and start balloons
+            document.getElementById("balloonContainer").style.display = "block";
+            startBalloons();
+        }
+
+        function startBalloons() {
+            function createBalloon() {
+                const balloon = document.createElement("div");
+                balloon.classList.add("balloon");
+                balloon.classList.add(Math.random() > 0.5 ? "gold-balloon" : "blue-balloon");
+                balloon.style.left = Math.random() * 100 + "vw";
+                balloon.style.animationDuration = Math.random() * 2 + 3 + "s";
+                document.getElementById("balloonContainer").appendChild(balloon);
+
+                setTimeout(() => {
+                    balloon.remove();
+                }, 5000);
+            }
+            setInterval(createBalloon, 600);
+        }
+
+        document.getElementById("cake").addEventListener("click", revealContent);
+    </script>
+
+</body>
+</html>
